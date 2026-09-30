@@ -1,6 +1,7 @@
 package com.example.representantes.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -85,6 +86,16 @@ class RepresentanteRepositoryJpaTest {
 		// Act & Assert
 		assertTrue(repository.existePorCpf(CPF));
 		verify(jpaRepository).existsById(CPF);
+	}
+
+	@Test
+	@DisplayName("Existe por CPF deve retornar falso quando o Spring Data não encontra")
+	void existePorCpf_inexistente_retornaFalso() {
+		// Arrange
+		when(jpaRepository.existsById("000")).thenReturn(false);
+
+		// Act & Assert
+		assertFalse(repository.existePorCpf("000"));
 	}
 
 	@Test

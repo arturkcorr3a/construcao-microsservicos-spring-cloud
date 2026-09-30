@@ -86,4 +86,58 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<!-- Testes de mutacao (PIT): mvn test -Pmutacao
+		     Relatorio em target/pit-reports/index.html -->
+		<profile>
+			<id>mutacao</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-maven</artifactId>
+						<version>1.30.0</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.pitest</groupId>
+								<artifactId>pitest-junit5-plugin</artifactId>
+								<version>1.2.3</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<!-- Classes com logica; model (POJO) e *Application ficam de fora -->
+							<targetClasses>
+								<param>com.example.representantes.controller.*</param>
+								<param>com.example.representantes.service.*</param>
+								<param>com.example.representantes.persistence.*</param>
+							</targetClasses>
+							<!-- Somente os testes unitarios: os *IT sobem Spring/H2 e ficariam lentos demais -->
+							<targetTests>
+								<param>com.example.representantes.*Test</param>
+							</targetTests>
+							<mutators>
+								<mutator>STRONGER</mutator>
+							</mutators>
+							<outputFormats>
+								<format>HTML</format>
+								<format>XML</format>
+							</outputFormats>
+							<timestampedReports>false</timestampedReports>
+							<!-- Build falha se a taxa de mutantes mortos ficar abaixo do limite -->
+							<mutationThreshold>100</mutationThreshold>
+						</configuration>
+						<executions>
+							<execution>
+								<id>mutacao</id>
+								<phase>test</phase>
+								<goals>
+									<goal>mutationCoverage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

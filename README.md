@@ -159,6 +159,37 @@ model/Peca                       modelo de domínio (sem anotações JPA)
 Os testes usam `src/test/resources/application.yml`, que desliga o config server e o Eureka,
 então rodam sem nenhuma infraestrutura no ar.
 
+## Testes de mutação (PIT)
+
+Cobertura mostra que o código **foi executado** pelos testes, não que os testes **detectam defeitos**.
+O [PIT](https://pitest.org) mede isso: ele cria versões alteradas do bytecode ("mutantes": inverte
+condições, remove chamadas, troca retornos por `true`/`false`/`null`/lista vazia...) e roda os testes
+contra cada uma. Se algum teste falha, o mutante foi **morto**; se todos passam, ele **sobreviveu**,
+ou seja, aquele defeito passaria despercebido.
+
+```bash
+mvn test -Pmutacao    # unitários + análise de mutação nos 3 serviços
+```
+
+Relatório: `<servico>/target/pit-reports/index.html` (e `mutations.xml`).
+
+| Configuração        | Valor                                                                 |
+|---------------------|-----------------------------------------------------------------------|
+| Ferramenta          | `pitest-maven` 1.30.0 + `pitest-junit5-plugin` 1.2.3 (profile `mutacao`) |
+| Classes mutadas     | `controller`, `service` e `persistence` (o `model` e a `*Application` ficam de fora) |
+| Testes usados       | só os unitários (`*Test`); os `*IT` subiriam o Spring a cada mutante  |
+| Mutadores           | `STRONGER`                                                            |
+| Limite              | `mutationThreshold` = **100%**: o build falha se algum mutante sobreviver |
+
+Resultado atual: 25 mutantes em peças e 24 em clientes e em representantes, **100% mortos** nos três.
+A cobertura de linhas é de 96% porque o construtor vazio `protected` das entidades JPA só é usado
+pelo Hibernate. Ele não tem lógica, então não gera mutantes.
+
+A primeira execução encontrou 1 sobrevivente por serviço: `existePorId`/`existePorCpf` trocado por
+`return true` passava, porque os testes só verificavam o caso verdadeiro. Esse defeito faria **todo
+cadastro ser rejeitado como duplicado**. Foi corrigido com um teste para o caso falso
+(`*RepositoryJpaTest.existePor*_inexistente_retornaFalso`).
+
 ## Testes (Postman)
 
 Importe `postman/pecas-clientes-representantes.postman_collection.json` no Postman

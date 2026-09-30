@@ -1,6 +1,7 @@
 package com.example.pecas.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -86,6 +87,16 @@ class PecaRepositoryJpaTest {
 		// Act & Assert
 		assertTrue(repository.existePorId(1L));
 		verify(jpaRepository).existsById(1L);
+	}
+
+	@Test
+	@DisplayName("Existe por id deve retornar falso quando o Spring Data não encontra")
+	void existePorId_inexistente_retornaFalso() {
+		// Arrange
+		when(jpaRepository.existsById(99L)).thenReturn(false);
+
+		// Act & Assert
+		assertFalse(repository.existePorId(99L));
 	}
 
 	@Test
