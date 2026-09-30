@@ -1,13 +1,21 @@
 package com.example.representantes.repository;
 
 import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
 import com.example.representantes.model.Representante;
 
-public interface RepresentanteRepository extends JpaRepository<Representante, String> {
+/** Porta de persistencia usada pelo servico; a implementacao JPA fica em {@code persistence}. */
+public interface RepresentanteRepository {
 
-	List<Representante> findByNomeContainingIgnoreCase(String nome);
+	Representante salvar(Representante representante);
+
+	boolean existePorCpf(String cpf);
+
+	Optional<Representante> buscarPorCpf(String cpf);
+
+	List<Representante> listarTodos();
+
+	List<Representante> buscarPorNome(String nome);
 
 }

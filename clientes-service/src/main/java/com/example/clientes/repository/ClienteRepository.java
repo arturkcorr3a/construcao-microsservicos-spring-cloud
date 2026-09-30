@@ -1,13 +1,21 @@
 package com.example.clientes.repository;
 
 import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
 import com.example.clientes.model.Cliente;
 
-public interface ClienteRepository extends JpaRepository<Cliente, String> {
+/** Porta de persistencia usada pelo servico; a implementacao JPA fica em {@code persistence}. */
+public interface ClienteRepository {
 
-	List<Cliente> findByNomeContainingIgnoreCase(String nome);
+	Cliente salvar(Cliente cliente);
+
+	boolean existePorCpf(String cpf);
+
+	Optional<Cliente> buscarPorCpf(String cpf);
+
+	List<Cliente> listarTodos();
+
+	List<Cliente> buscarPorNome(String nome);
 
 }

@@ -1,4 +1,9 @@
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/PecasServiceApplication.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/controller/PecaController.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/model/Peca.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/persistence/PecaEntity.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/persistence/PecaJpaRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/persistence/PecaRepositoryJpa.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/repository/PecaRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/service/PecaJaCadastradaException.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/pecas-service/src/main/java/com/example/pecas/service/PecaService.java

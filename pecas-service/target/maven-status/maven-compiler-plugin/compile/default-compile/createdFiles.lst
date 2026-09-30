@@ -1,4 +1,9 @@
 com/example/pecas/model/Peca.class
+com/example/pecas/service/PecaJaCadastradaException.class
 com/example/pecas/controller/PecaController.class
+com/example/pecas/persistence/PecaJpaRepository.class
+com/example/pecas/service/PecaService.class
+com/example/pecas/persistence/PecaEntity.class
+com/example/pecas/persistence/PecaRepositoryJpa.class
 com/example/pecas/repository/PecaRepository.class
 com/example/pecas/PecasServiceApplication.class

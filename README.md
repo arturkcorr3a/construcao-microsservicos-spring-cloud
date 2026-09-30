@@ -121,6 +121,44 @@ Rode a coleção do Postman para gerar tráfego e ver os gráficos se mexerem.
 
 Arquivos em `observability/`: `prometheus/prometheus.yml` e `grafana/` (provisioning + dashboard JSON).
 
+## Testes automatizados
+
+```bash
+mvn test      # só os unitários (*Test): rápidos, sem Spring
+mvn verify    # unitários + integração (*IT, via maven-failsafe-plugin)
+```
+
+Cada microsserviço de domínio é organizado em camadas, o que permite testar cada uma isolada
+(exemplo com peças; clientes e representantes seguem o mesmo padrão, com `cpf` como chave):
+
+```
+controller/PecaController        HTTP: rotas, status, 409 via @ExceptionHandler
+service/PecaService              regras de negócio (duplicado) + métricas
+repository/PecaRepository        interface de persistência usada pelo serviço (sem JPA)
+persistence/PecaRepositoryJpa    implementação: converte Peca <-> PecaEntity e usa o Spring Data
+persistence/PecaJpaRepository    Spring Data JPA
+model/Peca                       modelo de domínio (sem anotações JPA)
+```
+
+**Unitários** (JUnit 5 + Mockito, sem contexto Spring, padrão Arrange-Act-Assert):
+
+| Classe                  | O que fica isolado                                                         |
+|-------------------------|----------------------------------------------------------------------------|
+| `PecaServiceTest`       | repositório mockado; métricas num `SimpleMeterRegistry` em memória         |
+| `PecaControllerTest`    | **framework web**: métodos chamados direto, sem servlet/MockMvc; serviço mockado |
+| `PecaRepositoryJpaTest` | **framework de persistência e BD**: `PecaJpaRepository` (Spring Data) mockado |
+
+**Integração** (slices do Spring Boot, H2 em memória):
+
+| Classe                   | Anotação                                   | O que integra                               |
+|--------------------------|--------------------------------------------|---------------------------------------------|
+| `PecaRepositoryJpaIT`    | `@DataJpaTest`                             | JPA/Hibernate real + H2 (rollback por teste) |
+| `PecaControllerWebMvcIT` | `@WebMvcTest` + `@MockitoBean`             | Spring MVC real: rotas, JSON, validação (400), 404, 409 |
+| `PecasApiIT`             | `@SpringBootTest` + `@AutoConfigureMockMvc` | todas as camadas reais, incluindo as métricas |
+
+Os testes usam `src/test/resources/application.yml`, que desliga o config server e o Eureka,
+então rodam sem nenhuma infraestrutura no ar.
+
 ## Testes (Postman)
 
 Importe `postman/pecas-clientes-representantes.postman_collection.json` no Postman

@@ -1,18 +1,23 @@
 package com.example.clientes.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
+/** Cliente do dominio. Nao depende de JPA: o mapeamento para o banco fica em {@code persistence}. */
 public class Cliente {
 
-	@Id
 	@NotBlank
 	private String cpf;
 
 	@NotBlank
 	private String nome;
+
+	public Cliente() {
+	}
+
+	public Cliente(String cpf, String nome) {
+		this.cpf = cpf;
+		this.nome = nome;
+	}
 
 	public String getCpf() {
 		return cpf;

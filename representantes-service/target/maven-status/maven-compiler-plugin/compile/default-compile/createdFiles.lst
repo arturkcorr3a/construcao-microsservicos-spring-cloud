@@ -1,4 +1,9 @@
-com/example/representantes/controller/RepresentanteController.class
 com/example/representantes/RepresentantesServiceApplication.class
+com/example/representantes/service/RepresentanteService.class
+com/example/representantes/service/RepresentanteJaCadastradoException.class
+com/example/representantes/persistence/RepresentanteJpaRepository.class
+com/example/representantes/persistence/RepresentanteRepositoryJpa.class
+com/example/representantes/controller/RepresentanteController.class
 com/example/representantes/repository/RepresentanteRepository.class
+com/example/representantes/persistence/RepresentanteEntity.class
 com/example/representantes/model/Representante.class

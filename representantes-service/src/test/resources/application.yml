@@ -1,0 +1,13 @@
+# Configuracao dos testes: substitui o application.yml principal para que os testes
+# nao dependam do config server nem do Eureka no ar.
+spring:
+  application:
+    name: representantes-service
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+eureka:
+  client:
+    enabled: false

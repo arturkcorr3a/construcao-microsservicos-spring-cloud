@@ -1,4 +1,9 @@
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/ClientesServiceApplication.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/controller/ClienteController.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/model/Cliente.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/persistence/ClienteEntity.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/persistence/ClienteJpaRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/persistence/ClienteRepositoryJpa.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/repository/ClienteRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/service/ClienteJaCadastradoException.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/clientes-service/src/main/java/com/example/clientes/service/ClienteService.java

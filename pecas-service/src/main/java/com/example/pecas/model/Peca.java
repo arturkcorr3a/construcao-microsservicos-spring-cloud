@@ -1,15 +1,12 @@
 package com.example.pecas.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-@Entity
+/** Peca do dominio. Nao depende de JPA: o mapeamento para o banco fica em {@code persistence}. */
 public class Peca {
 
 	/** Numero de identificacao da peca, informado no cadastro. */
-	@Id
 	@NotNull
 	private Long id;
 
@@ -17,6 +14,15 @@ public class Peca {
 	private String nome;
 
 	private String descricao;
+
+	public Peca() {
+	}
+
+	public Peca(Long id, String nome, String descricao) {
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+	}
 
 	public Long getId() {
 		return id;

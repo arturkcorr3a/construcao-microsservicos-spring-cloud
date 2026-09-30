@@ -1,4 +1,9 @@
+com/example/clientes/persistence/ClienteEntity.class
 com/example/clientes/controller/ClienteController.class
+com/example/clientes/service/ClienteJaCadastradoException.class
 com/example/clientes/repository/ClienteRepository.class
 com/example/clientes/model/Cliente.class
+com/example/clientes/service/ClienteService.class
+com/example/clientes/persistence/ClienteJpaRepository.class
 com/example/clientes/ClientesServiceApplication.class
+com/example/clientes/persistence/ClienteRepositoryJpa.class

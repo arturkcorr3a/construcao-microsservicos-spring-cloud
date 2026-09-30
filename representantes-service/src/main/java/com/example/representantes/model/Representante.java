@@ -1,18 +1,23 @@
 package com.example.representantes.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
+/** Representante do dominio. Nao depende de JPA: o mapeamento para o banco fica em {@code persistence}. */
 public class Representante {
 
-	@Id
 	@NotBlank
 	private String cpf;
 
 	@NotBlank
 	private String nome;
+
+	public Representante() {
+	}
+
+	public Representante(String cpf, String nome) {
+		this.cpf = cpf;
+		this.nome = nome;
+	}
 
 	public String getCpf() {
 		return cpf;

@@ -1,4 +1,9 @@
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/RepresentantesServiceApplication.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/controller/RepresentanteController.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/model/Representante.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/persistence/RepresentanteEntity.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/persistence/RepresentanteJpaRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/persistence/RepresentanteRepositoryJpa.java
 /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/repository/RepresentanteRepository.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/service/RepresentanteJaCadastradoException.java
+/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/representantes-service/src/main/java/com/example/representantes/service/RepresentanteService.java
