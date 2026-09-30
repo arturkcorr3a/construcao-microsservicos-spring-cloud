@@ -1,0 +1,4 @@
+com/example/clientes/controller/ClienteController.class
+com/example/clientes/repository/ClienteRepository.class
+com/example/clientes/model/Cliente.class
+com/example/clientes/ClientesServiceApplication.class

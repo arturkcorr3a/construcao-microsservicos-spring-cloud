@@ -1,0 +1,4 @@
+com/example/pecas/model/Peca.class
+com/example/pecas/controller/PecaController.class
+com/example/pecas/PecasServiceApplication.class
+com/example/pecas/repository/PecaRepository.class

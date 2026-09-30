@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: pecas
+              uri: lb://pecas-service
+              predicates:
+                - Path=/pecas/**
+            - id: clientes
+              uri: lb://clientes-service
+              predicates:
+                - Path=/clientes/**
+            - id: representantes
+              uri: lb://representantes-service
+              predicates:
+                - Path=/representantes/**
+    # Atualiza mais rapido a lista de instancias vinda do Eureka
+    # (padrao: registro a cada 30s + cache de 35s no load balancer)
+    loadbalancer:
+      cache:
+        ttl: 5s
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5

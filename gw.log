@@ -1,0 +1,32 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.8)
+
+2026-09-30T11:44:09.129-03:00  INFO 180409 --- [           main] gateway.Application                      : Starting Application using Java 21.0.12.1 with PID 180409 (/home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/gs-gateway/initial/target/classes started by arturkalil in /home/arturkalil/Documents/pucrs/construcao-de-software/atividade-completa/gs-gateway/initial)
+2026-09-30T11:44:09.132-03:00  INFO 180409 --- [           main] gateway.Application                      : No active profile set, falling back to 1 default profile: "default"
+2026-09-30T11:44:09.893-03:00  INFO 180409 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=edb4cce4-b0df-39aa-871a-65b793eef807
+2026-09-30T11:44:10.606-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-09-30T11:44:10.606-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Version]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-09-30T11:44:10.607-03:00  INFO 180409 --- [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-09-30T11:44:10.932-03:00  INFO 180409 --- [           main] o.s.boot.reactor.netty.NettyWebServer    : Netty started on port 8080 (http)
+2026-09-30T11:44:10.960-03:00  INFO 180409 --- [           main] gateway.Application                      : Started Application in 2.23 seconds (process running for 2.675)
+2026-09-30T11:44:13.724-03:00  INFO 180409 --- [ionShutdownHook] o.s.boot.reactor.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-30T11:44:13.726-03:00  INFO 180409 --- [ netty-shutdown] o.s.boot.reactor.netty.GracefulShutdown  : Graceful shutdown complete

@@ -1,0 +1,13 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          # Funciona tanto executando da raiz do projeto quanto de dentro de config-server/
+          search-locations: file:./config-repo/,file:../config-repo/
