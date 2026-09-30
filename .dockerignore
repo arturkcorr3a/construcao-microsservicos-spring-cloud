@@ -1,0 +1,7 @@
+**/target
+templates
+postman
+*.log
+.git
+.idea
+.vscode

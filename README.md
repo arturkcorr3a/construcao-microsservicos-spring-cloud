@@ -61,6 +61,27 @@ Painel do Eureka: http://localhost:8761
 > Depois de subir um serviço, espere alguns segundos até ele aparecer no gateway
 > (registro no Eureka + atualização do cache). Até lá, o gateway responde `503`.
 
+## Como executar com Docker
+
+```bash
+docker compose up --build -d     # constroi as 6 imagens e sobe tudo
+docker compose ps                # config-server e eureka-server devem ficar "healthy"
+docker compose logs -f gateway   # acompanhar os logs de um servico
+docker compose down              # derrubar tudo
+```
+
+- Um único `Dockerfile` genérico gera a imagem de cada módulo (`--build-arg MODULE=<modulo>`).
+  O `docker-compose.yml` o reaproveita para os 6 serviços.
+- Ordem de subida: os serviços de domínio e o gateway só iniciam depois que o config server
+  e o Eureka passam no healthcheck.
+- Dentro da rede do compose, os serviços se acham pelo nome (`config-server`, `eureka-server`).
+  Isso é passado pelas variáveis `CONFIG_SERVER_URL` e `EUREKA_URL`; sem elas, o padrão é `localhost`.
+- Portas publicadas no host: **8080** (gateway), 8761 (painel do Eureka) e 8888 (config server).
+  Os microsserviços de domínio **não** publicam portas, então só dá para acessá-los pelo gateway.
+- `config-repo/` é montado no config server, então dá para editar a configuração sem reconstruir a imagem.
+
+A coleção do Postman funciona igual (`baseUrl = http://localhost:8080`).
+
 ## Testes (Postman)
 
 Importe `postman/pecas-clientes-representantes.postman_collection.json` no Postman

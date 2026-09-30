@@ -1,0 +1,83 @@
+# Sobe toda a arquitetura:  docker compose up --build
+# Acesso externo: gateway (8080), painel do Eureka (8761) e config server (8888).
+# Os microsservicos de dominio NAO publicam portas: so sao acessiveis pelo gateway.
+
+x-cliente-config: &cliente-config
+  environment:
+    CONFIG_SERVER_URL: http://config-server:8888
+    EUREKA_URL: http://eureka-server:8761/eureka/
+  depends_on:
+    config-server:
+      condition: service_healthy
+    eureka-server:
+      condition: service_healthy
+  restart: on-failure
+
+x-healthcheck: &healthcheck
+  interval: 5s
+  timeout: 3s
+  retries: 30
+  start_period: 10s
+
+services:
+  config-server:
+    build:
+      context: .
+      args:
+        MODULE: config-server
+    image: atividade/config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      # Monta o config-repo: da para editar a configuracao sem reconstruir a imagem
+      # (":z" ajusta o rotulo SELinux, necessario no Fedora)
+      - ./config-repo:/app/config-repo:ro,z
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8888/application/default"]
+      <<: *healthcheck
+
+  eureka-server:
+    build:
+      context: .
+      args:
+        MODULE: eureka-server
+    image: atividade/eureka-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8761/eureka/apps"]
+      <<: *healthcheck
+
+  pecas-service:
+    <<: *cliente-config
+    build:
+      context: .
+      args:
+        MODULE: pecas-service
+    image: atividade/pecas-service
+
+  clientes-service:
+    <<: *cliente-config
+    build:
+      context: .
+      args:
+        MODULE: clientes-service
+    image: atividade/clientes-service
+
+  representantes-service:
+    <<: *cliente-config
+    build:
+      context: .
+      args:
+        MODULE: representantes-service
+    image: atividade/representantes-service
+
+  gateway:
+    <<: *cliente-config
+    build:
+      context: .
+      args:
+        MODULE: gateway
+    image: atividade/gateway
+    ports:
+      - "8080:8080"
