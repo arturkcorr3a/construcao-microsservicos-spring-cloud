@@ -11,3 +11,15 @@ spring:
         native:
           # Funciona tanto executando da raiz do projeto quanto de dentro de config-server/
           search-locations: file:./config-repo/,file:../config-repo/
+# Metricas para o Prometheus (GET /actuator/prometheus)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true

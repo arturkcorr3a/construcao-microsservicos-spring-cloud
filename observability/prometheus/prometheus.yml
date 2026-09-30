@@ -1,0 +1,34 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  # Gateway e microsservicos: descobertos pelo proprio Eureka.
+  # Novas instancias (replicas) entram no scrape automaticamente.
+  - job_name: servicos
+    metrics_path: /actuator/prometheus
+    eureka_sd_configs:
+      - server: http://eureka-server:8761/eureka
+        refresh_interval: 10s
+    relabel_configs:
+      # Coleta pelo IP + porta com que a instancia se registrou
+      - source_labels: [__meta_eureka_app_instance_ip_addr, __meta_eureka_app_instance_port]
+        separator: ":"
+        target_label: __address__
+      # Label "servico" com o nome da aplicacao (o Eureka devolve em maiusculas)
+      - source_labels: [__meta_eureka_app_name]
+        action: lowercase
+        target_label: servico
+      - source_labels: [__meta_eureka_app_instance_id]
+        target_label: instance
+
+  # Infraestrutura: nao se registra no Eureka, entao os enderecos sao fixos
+  - job_name: infraestrutura
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["config-server:8888"]
+        labels:
+          servico: config-server
+      - targets: ["eureka-server:8761"]
+        labels:
+          servico: eureka-server

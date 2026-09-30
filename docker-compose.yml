@@ -1,5 +1,6 @@
 # Sobe toda a arquitetura:  docker compose up --build
-# Acesso externo: gateway (8080), painel do Eureka (8761) e config server (8888).
+# Acesso externo: gateway (8080), painel do Eureka (8761), config server (8888),
+# Prometheus (9090) e Grafana (3000, usuario/senha admin/admin).
 # Os microsservicos de dominio NAO publicam portas: so sao acessiveis pelo gateway.
 
 x-cliente-config: &cliente-config
@@ -81,3 +82,28 @@ services:
     image: atividade/gateway
     ports:
       - "8080:8080"
+
+  # ---------- Observabilidade ----------
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro,z
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:12.1.1
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/microsservicos.json
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro,z
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro,z
+    depends_on:
+      - prometheus

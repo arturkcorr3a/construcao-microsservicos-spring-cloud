@@ -1,0 +1,10 @@
+apiVersion: 1
+
+providers:
+  - name: microsservicos
+    folder: Atividade
+    type: file
+    disableDeletion: true
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards

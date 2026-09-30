@@ -3,6 +3,9 @@ package com.example.pecas.controller;
 import java.net.URI;
 import java.util.List;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +27,30 @@ import jakarta.validation.Valid;
 public class PecaController {
 
 	private final PecaRepository repository;
+	private final Counter cadastrosComSucesso;
+	private final Counter cadastrosDuplicados;
 
-	public PecaController(PecaRepository repository) {
+	public PecaController(PecaRepository repository, MeterRegistry meterRegistry) {
 		this.repository = repository;
+		// Exportado no Prometheus como pecas_cadastro_total{resultado="..."}
+		this.cadastrosComSucesso = Counter.builder("pecas.cadastro")
+				.description("Tentativas de cadastro de pecas, por resultado")
+				.tag("resultado", "sucesso")
+				.register(meterRegistry);
+		this.cadastrosDuplicados = Counter.builder("pecas.cadastro")
+				.description("Tentativas de cadastro de pecas, por resultado")
+				.tag("resultado", "duplicado")
+				.register(meterRegistry);
 	}
 
 	@PostMapping
 	public ResponseEntity<Peca> cadastrar(@Valid @RequestBody Peca peca) {
 		if (repository.existsById(peca.getId())) {
+			cadastrosDuplicados.increment();
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Ja existe peca com id " + peca.getId());
 		}
 		Peca salva = repository.save(peca);
+		cadastrosComSucesso.increment();
 		return ResponseEntity.created(URI.create("/pecas/" + salva.getId())).body(salva);
 	}
 

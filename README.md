@@ -82,6 +82,45 @@ docker compose down              # derrubar tudo
 
 A coleção do Postman funciona igual (`baseUrl = http://localhost:8080`).
 
+## Observabilidade (Prometheus + Grafana)
+
+Sobe junto com o `docker compose up --build -d`:
+
+| Ferramenta | URL                   | Acesso      |
+|------------|-----------------------|-------------|
+| Prometheus | http://localhost:9090 | —           |
+| Grafana    | http://localhost:3000 | admin/admin |
+
+**Como as métricas chegam ao Prometheus**
+- Todos os serviços usam `spring-boot-starter-actuator` + `micrometer-registry-prometheus`
+  e expõem `/actuator/prometheus`. Esse endpoint **não** é roteado pelo gateway; só o Prometheus
+  o acessa, dentro da rede do compose.
+- O Prometheus descobre o gateway e os microsserviços **pelo Eureka** (`eureka_sd_configs`), então
+  réplicas novas entram no scrape sozinhas. Config server e Eureka têm endereço fixo.
+  Ver os alvos em http://localhost:9090/targets.
+- Toda série recebe o label `servico` (e a tag `application`) com o nome do serviço.
+
+**Métricas customizadas** (contadores nos controllers):
+
+| Métrica                                          | Significado |
+|--------------------------------------------------|-------------|
+| `pecas_cadastro_total{resultado="sucesso"}`      | peças cadastradas |
+| `pecas_cadastro_total{resultado="duplicado"}`    | tentativas com id já existente (409) |
+| `clientes_cadastro_total{...}`                   | idem, para clientes |
+| `representantes_cadastro_total{...}`             | idem, para representantes |
+
+Métricas automáticas úteis: `http_server_requests_seconds_*` (por uri/status, com histograma para
+percentis), `spring_cloud_gateway_requests_seconds_*` (por rota do gateway), `jvm_memory_used_bytes`,
+`process_cpu_usage`.
+
+**Dashboard**: o Grafana já sobe com o datasource do Prometheus e o dashboard
+*Microsserviços: Peças, Clientes e Representantes* (pasta *Atividade*, também definido como página inicial),
+com filtro por serviço e painéis de: serviços no ar, cadastros, requisições por rota do gateway,
+status HTTP, requisições/s, taxa de erros, latência p95, heap e CPU.
+Rode a coleção do Postman para gerar tráfego e ver os gráficos se mexerem.
+
+Arquivos em `observability/`: `prometheus/prometheus.yml` e `grafana/` (provisioning + dashboard JSON).
+
 ## Testes (Postman)
 
 Importe `postman/pecas-clientes-representantes.postman_collection.json` no Postman

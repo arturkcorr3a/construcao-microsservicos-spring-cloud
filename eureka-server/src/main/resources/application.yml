@@ -11,3 +11,15 @@ logging:
   level:
     com.netflix.eureka: OFF
     com.netflix.discovery: OFF
+# Metricas para o Prometheus (GET /actuator/prometheus)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true

@@ -16,8 +16,15 @@ spring:
       ddl-auto: update
     open-in-view: false
 
+# Metricas para o Prometheus (GET /actuator/prometheus)
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,refresh
+        include: health,info,refresh,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
